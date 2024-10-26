@@ -1,7 +1,7 @@
-import React from "react";
+import LinkAccountButton from "@/components/ui/LinkAccountButton";
 
 const page = () => {
-  return <div className="">hello</div>;
+  return <LinkAccountButton />;
 };
 
 export default page;
