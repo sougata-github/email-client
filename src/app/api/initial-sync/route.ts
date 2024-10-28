@@ -8,7 +8,7 @@ export const POST = async (req: NextRequest) => {
 
   if (!accountId || !userId) {
     return NextResponse.json(
-      { error: "Missing account Id or userId" },
+      { error: "Missing accountId or userId" },
       { status: 400 },
     );
   }

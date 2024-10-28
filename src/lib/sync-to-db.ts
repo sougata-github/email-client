@@ -48,7 +48,7 @@ async function upsertEmail(
     const addressesToUpsert = new Map();
 
     for (const address of [
-      email.from, //one mail from one address
+      email.from, //each mail will have one "from" address
       ...email.to,
       ...email.cc,
       ...email.bcc,
