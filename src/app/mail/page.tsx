@@ -1,4 +1,13 @@
-import Mail from "@/components/mail/Mail";
+import dynamic from "next/dynamic";
+
+const Mail = dynamic(
+  () => {
+    return import("@/components/mail/Mail");
+  },
+  {
+    ssr: false,
+  },
+);
 
 const page = () => {
   return (

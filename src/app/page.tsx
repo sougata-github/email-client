@@ -1,4 +1,4 @@
-import LinkAccountButton from "@/components/ui/LinkAccountButton";
+import LinkAccountButton from "@/components/LinkAccountButton";
 
 const page = () => {
   return <LinkAccountButton />;

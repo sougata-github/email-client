@@ -10,6 +10,8 @@ import { TooltipProvider } from "../ui/tooltip";
 import { useState } from "react";
 import { Separator } from "../ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import AccountSwitcher from "./AccountSwitcher";
+import Sidebar from "./Sidebar";
 
 type Props = {
   defaultLayout: number[] | undefined;
@@ -45,7 +47,7 @@ const Mail = ({
           }}
           className={cn(
             isCollapsed &&
-              "min-w-[50px] transition-all duration-300 ease-in-out",
+              "min-w-[50px] pl-2 transition-all duration-300 ease-in-out",
           )}
         >
           <div className="flex h-full flex-1 flex-col">
@@ -55,10 +57,10 @@ const Mail = ({
                 isCollapsed ? "h-[52px]" : "px-2",
               )}
             >
-              Account Switcher
+              <AccountSwitcher isCollapsed={isCollapsed} />
             </div>
             <Separator />
-            Sidebar
+            <Sidebar isCollapsed={isCollapsed} />
             <div className="flex-1"></div>
             Ask Ai
           </div>

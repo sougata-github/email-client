@@ -47,6 +47,24 @@ export const GET = async (req: NextRequest) => {
     );
   }
 
+  //so that we can't link the same account again
+  const existingAccount = await db.account.findUnique({
+    where: {
+      emailAddress: accountDetails.email,
+    },
+  });
+
+  if (existingAccount) {
+    return NextResponse.json(
+      {
+        message: "Can't link an existing account.",
+      },
+      {
+        status: 409,
+      },
+    );
+  }
+
   //create account in db
   const account = await db.account.upsert({
     where: {
