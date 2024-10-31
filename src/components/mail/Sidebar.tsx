@@ -16,22 +16,25 @@ const Sidebar = ({ isCollapsed }: Props) => {
     "inbox",
   );
 
-  const { data: inboxThreads } = api.account.getNumThreads.useQuery({
-    accountId,
-    tab: "inbox",
-  });
+  const { data: inboxThreads, isLoading: isInboxLoading } =
+    api.account.getNumThreads.useQuery(
+      { accountId, tab: "inbox" },
+      { enabled: Boolean(accountId) },
+    );
 
-  const { data: draftThreads } = api.account.getNumThreads.useQuery({
-    accountId,
-    tab: "inbox",
-  });
+  const { data: draftThreads, isLoading: isDraftLoading } =
+    api.account.getNumThreads.useQuery(
+      { accountId, tab: "draft" },
+      { enabled: Boolean(accountId) },
+    );
 
-  const { data: sentThreads } = api.account.getNumThreads.useQuery({
-    accountId,
-    tab: "inbox",
-  });
+  const { data: sentThreads, isLoading: isSentLoading } =
+    api.account.getNumThreads.useQuery(
+      { accountId, tab: "sent" },
+      { enabled: Boolean(accountId) },
+    );
 
-  if (!inboxThreads || !draftThreads || !sentThreads) {
+  if (isInboxLoading || isDraftLoading || isSentLoading) {
     return (
       <div className="mt-4 flex w-full items-center justify-center">
         <Loader className="size-4 animate-spin" />

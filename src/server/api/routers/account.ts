@@ -1,7 +1,8 @@
+import { privateProcedure } from "./../trpc";
 import { z } from "zod";
 import { db } from "@/server/db";
 import { Prisma } from "@prisma/client";
-import { createTRPCRouter, privateProcedure } from "../trpc";
+import { createTRPCRouter } from "../trpc";
 
 export const authoriseAccountAccess = async (
   accountId: string,
@@ -63,10 +64,67 @@ export const accountRouter = createTRPCRouter({
         filter.sentStatus = true;
       }
 
-      return await ctx.db.thread.count({
+      const numThreads = await ctx.db.thread.count({
         where: {
           accountId: account.id,
           ...filter,
+        },
+      });
+
+      return numThreads > 0 ? numThreads : 0;
+    }),
+  getThreads: privateProcedure
+    .input(
+      z.object({
+        accountId: z.string(),
+        tab: z.string(),
+        done: z.boolean().optional(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const account = await authoriseAccountAccess(
+        input.accountId,
+        ctx.auth.userId,
+      );
+
+      let filter: Prisma.ThreadWhereInput = {};
+
+      if (input.tab === "inbox") {
+        filter.inboxStatus = true;
+      } else if (input.tab === "draft") {
+        filter.draftStatus = true;
+      } else if (input.tab === "sent") {
+        filter.sentStatus = true;
+      }
+
+      filter.done = {
+        equals: input.done,
+      };
+
+      return await ctx.db.thread.findMany({
+        where: {
+          accountId: account.id,
+          ...filter,
+        },
+        include: {
+          emails: {
+            orderBy: {
+              sentAt: "asc",
+            },
+            select: {
+              from: true,
+              body: true,
+              bodySnippet: true,
+              subject: true,
+              sysLabels: true,
+              id: true,
+              sentAt: true,
+            },
+          },
+        },
+        take: 15,
+        orderBy: {
+          lastMessageDate: "desc",
         },
       });
     }),

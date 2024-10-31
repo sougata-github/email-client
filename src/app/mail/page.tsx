@@ -1,3 +1,4 @@
+import ThemeToggle from "@/components/ThemeToggle";
 import dynamic from "next/dynamic";
 
 const Mail = dynamic(
@@ -12,6 +13,9 @@ const Mail = dynamic(
 const page = () => {
   return (
     <div>
+      <div className="absolute bottom-4 left-4">
+        <ThemeToggle />
+      </div>
       <Mail
         defaultLayout={[20, 32, 48]}
         defaultCollapsed={false}
