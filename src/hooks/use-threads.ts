@@ -10,7 +10,7 @@ export function useThreads() {
   const { data: accounts } = api.account.getAccounts.useQuery();
 
   const [accountId] = useLocalStorage("accountId", "");
-  const [tab] = useLocalStorage("gravity-mail", "inbox");
+  const [tab] = useLocalStorage("gravity-mail-tab", "inbox");
   const [done] = useLocalStorage("gravity-mail-done", false);
 
   const [threadId, setThreadId] = useAtom(threadIdAtom);

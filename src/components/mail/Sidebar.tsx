@@ -12,7 +12,7 @@ type Props = {
 const Sidebar = ({ isCollapsed }: Props) => {
   const [accountId] = useLocalStorage("accountId", "");
   const [tab] = useLocalStorage<"inbox" | "draft" | "sent">(
-    "gravity-mail",
+    "gravity-mail-tab",
     "inbox",
   );
 

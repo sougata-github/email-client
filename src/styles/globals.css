@@ -72,4 +72,8 @@
     max-width: 100%;
     word-wrap: break-word;
   }
+
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
 }

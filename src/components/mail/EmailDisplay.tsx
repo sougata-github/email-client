@@ -23,8 +23,8 @@ const EmailDisplay = ({ email }: Props) => {
         isMe && "border-l-4 border-l-gray-900",
       )}
     >
-      <div className="flex items-center justify-between gap-2">
-        <div className="flex items-center justify-between gap-2">
+      <div className="flex flex-col items-start justify-between gap-2 lg:flex-row lg:items-center">
+        <div className="flex flex-col items-start justify-between gap-2 lg:flex-row lg:items-center">
           {!isMe && (
             <Avatar
               name={email.from.name ?? email.from.address}

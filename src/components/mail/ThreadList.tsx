@@ -66,14 +66,16 @@ const ThreadList = () => {
                   )}
                 >
                   <div className="flex w-full flex-col gap-2">
-                    <div className="flex items-center">
+                    <div className="flex flex-col items-start lg:flex-row lg:items-center">
                       <div className="flex items-center gap-2">
                         <div className="font-semibold">
                           {thread.emails.at(-1)?.from.name}
                         </div>
                       </div>
 
-                      <div className={cn("ml-auto text-xs")}>
+                      <div
+                        className={cn("ml-0 mt-2 text-xs lg:ml-auto lg:mt-0")}
+                      >
                         {formatDistanceToNow(
                           thread.emails.at(-1)?.sentAt ?? new Date(),
                           { addSuffix: true },

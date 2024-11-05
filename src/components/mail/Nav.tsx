@@ -24,7 +24,7 @@ interface NavProps {
 }
 
 const Nav = ({ links, isCollapsed }: NavProps) => {
-  const [_, setTab] = useLocalStorage("gravity-mail", "inbox");
+  const [_, setTab] = useLocalStorage("gravity-mail-tab", "inbox");
 
   return (
     <div
