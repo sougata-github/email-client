@@ -18,7 +18,7 @@ type Props = {
 };
 
 const AccountSwitcher = ({ isCollapsed }: Props) => {
-  const { data, isLoading } = api.account.getAccounts.useQuery();
+  const { data } = api.account.getAccounts.useQuery();
 
   const [accountId, setAccountId] = useLocalStorage(
     "accountId",

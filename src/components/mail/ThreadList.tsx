@@ -19,7 +19,7 @@ function getBadgeVariantFromLabel(
 }
 
 const ThreadList = () => {
-  const { threads, threadId, setThreadId, isFetching } = useThreads();
+  const { threads, threadId, setThreadId } = useThreads();
 
   if (!threads) {
     return (
@@ -80,13 +80,13 @@ const ThreadList = () => {
                         )}
                       </div>
                     </div>
-                    <div className="truncate text-xs font-semibold text-black/60">
+                    <div className="truncate text-xs font-semibold text-black/60 dark:text-white/50">
                       {thread.subject}
                     </div>
                   </div>
 
                   <div
-                    className="line-clamp-2 text-xs text-muted-foreground"
+                    className="line-clamp-2 text-xs text-muted-foreground dark:text-white/80"
                     dangerouslySetInnerHTML={{
                       __html: DOMPurify.sanitize(
                         thread.emails.at(-1)?.bodySnippet ?? "",
@@ -103,6 +103,7 @@ const ThreadList = () => {
                         <Badge
                           key={label}
                           variant={getBadgeVariantFromLabel(label)}
+                          className="border border-black/10 dark:border dark:border-white/10"
                         >
                           {label}
                         </Badge>

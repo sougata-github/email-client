@@ -13,6 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import AccountSwitcher from "./AccountSwitcher";
 import Sidebar from "./Sidebar";
 import ThreadList from "./ThreadList";
+import ThreadDisplay from "./ThreadDisplay";
 
 type Props = {
   defaultLayout: number[] | undefined;
@@ -54,7 +55,7 @@ const Mail = ({
           <div className="flex h-full flex-1 flex-col">
             <div
               className={cn(
-                "flex h-[52px] items-center justify-between",
+                "flex h-[52px] items-center justify-center",
                 isCollapsed ? "h-[52px]" : "px-2",
               )}
             >
@@ -63,7 +64,7 @@ const Mail = ({
             <Separator />
             <Sidebar isCollapsed={isCollapsed} />
             <div className="flex-1"></div>
-            Ask Ai
+            {/* Ask Ai */}
           </div>
         </ResizablePanel>
         <ResizableHandle withHandle />
@@ -97,7 +98,7 @@ const Mail = ({
 
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[2]} minSize={30}>
-          Thread
+          <ThreadDisplay />
         </ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>
