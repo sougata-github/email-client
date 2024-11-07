@@ -56,6 +56,17 @@
     --chart-5: 340 75% 55%;
   }
 }
+
+.tiptap.ProseMirror {
+  outline: none;
+}
+
+.is-active {
+  background-color: #dadadada;
+  border-radius: 4px;
+  padding: 0px 2px;
+}
+
 @layer base {
   * {
     @apply border-border;

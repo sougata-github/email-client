@@ -12,7 +12,7 @@ const Mail = dynamic(
 
 const page = () => {
   return (
-    <div>
+    <div className="relative">
       <div className="absolute bottom-4 left-2">
         <ThemeToggle />
       </div>
