@@ -13,7 +13,7 @@ const Component = ({
 }: {
   replyDetails: RouterOutputs["account"]["getReplyDetails"];
 }) => {
-  const { threadId, accountId } = useThreads();
+  const { threadId } = useThreads();
 
   const [subject, setSubject] = useState(
     replyDetails.subject.startsWith("Re")
@@ -74,7 +74,7 @@ const ReplyBox = (props: Props) => {
 
   if (!replyDetails)
     return (
-      <div className="mb-4 mt-4 flex h-2 w-full items-center justify-center">
+      <div className="mb-4 mt-4 flex w-full items-center justify-center">
         <Loader className="size-4 animate-spin" />
       </div>
     );

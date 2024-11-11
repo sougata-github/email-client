@@ -3,14 +3,15 @@
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Text } from "@tiptap/extension-text";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import EditorMenuBar from "./EditorMenuBar";
 import { Separator } from "../../ui/separator";
 import { Button } from "../../ui/button";
 import TagInput from "./TagInput";
-import { useThreads } from "@/hooks/use-threads";
-import { Loader } from "lucide-react";
 import { Input } from "../../ui/input";
+import AiComponseButton from "./AiComponseButton";
+import { generate } from "@/actions/automcomplete";
+import { readStreamableValue } from "ai/rsc";
 
 type Props = {
   subject: string;
@@ -44,25 +45,49 @@ const EmailEditor = ({
 }: Props) => {
   const [value, setValue] = useState<string>("");
   const [expanded, setExpanded] = useState<boolean>(defaultToolbarExpanded);
+  const [token, setToken] = useState<string>("");
 
-  const editor = useEditor({
-    autofocus: false,
-    extensions: [StarterKit],
-    onUpdate: ({ editor }) => {
-      setValue(editor.getHTML());
-    },
-  });
+  const aiGenerate = async (value: string) => {
+    const { output } = await generate(value);
 
-  //for ctrl+j autocomplete feature.
+    for await (const token of readStreamableValue(output)) {
+      if (token) {
+        setToken(token);
+      }
+    }
+  };
+
+  //autocomplete on ctrl+j.
   const customText = Text.extend({
     addKeyboardShortcuts() {
       return {
+        "CTRL-j": () => {
+          aiGenerate(this.editor.getText());
+          return true;
+        },
         "Meta-j": () => {
+          aiGenerate(this.editor.getText());
           return true;
         },
       };
     },
   });
+
+  const editor = useEditor({
+    autofocus: false,
+    extensions: [StarterKit, customText],
+    onUpdate: ({ editor }) => {
+      setValue(editor.getHTML());
+    },
+  });
+
+  const onGenerate = (token: string) => {
+    editor?.commands?.insertContent(token);
+  };
+
+  useEffect(() => {
+    editor?.commands.insertContent(token);
+  }, [editor, token]);
 
   if (!editor) return null;
 
@@ -106,6 +131,10 @@ const EmailEditor = ({
             <span>to {to.join(", ")}</span>
           </div>
         </div>
+        <AiComponseButton
+          isComponsing={defaultToolbarExpanded}
+          onGenerate={onGenerate}
+        />
       </div>
 
       <div className="prose w-full p-4">
